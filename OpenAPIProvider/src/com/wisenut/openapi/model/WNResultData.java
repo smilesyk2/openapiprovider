@@ -2,7 +2,7 @@ package com.wisenut.openapi.model;
 
 import java.util.ArrayList;
 
-public class ResultData {
+public class WNResultData {
 	private static final String JSON_COMMA = ",";
 	private static final String JSON_COLON = ":";
 	private static final String JSON_QUOT ="\"";
@@ -12,7 +12,11 @@ public class ResultData {
 	private int totalCount;
 	private int currentCount;
 	private int startPos;
-	private ArrayList<ResultItem> itemList;
+	private ArrayList<WNResultItem> itemList;
+	
+	public WNResultData(){
+		itemList = new ArrayList<WNResultItem>();
+	}
 	
 	public String toString(){
 		StringBuffer sbResult = new StringBuffer();
@@ -20,7 +24,7 @@ public class ResultData {
 		sbResult.append(JSON_QUOT + "Result" + JSON_QUOT + JSON_COLON);
 		
 		sbResult.append(	"{");
-		sbResult.append(	JSON_QUOT + "provider" + JSON_QUOT + JSON_COLON).append(this.provider);
+		sbResult.append(	JSON_QUOT + "provider" + JSON_QUOT + JSON_COLON).append(JSON_QUOT + this.provider + JSON_QUOT);
 		sbResult.append(	JSON_COMMA);
 		sbResult.append(	JSON_QUOT + "totalCount" + JSON_QUOT + JSON_COLON).append(this.totalCount);
 		sbResult.append(	JSON_COMMA);
@@ -32,13 +36,13 @@ public class ResultData {
 		sbResult.append(		"[");
 		for(int i=0; i<itemList.size(); i++){
 			sbResult.append(	"{");
-			sbResult.append(	JSON_QUOT + "title" + JSON_QUOT + JSON_COLON).append(this.itemList.get(i).getTitle());
+			sbResult.append(	JSON_QUOT + "title" + JSON_QUOT + JSON_COLON).append(JSON_QUOT + this.itemList.get(i).getTitle() + JSON_QUOT);
 			sbResult.append(	JSON_COMMA);
-			sbResult.append(	JSON_QUOT + "contents" + JSON_QUOT + JSON_COLON).append(this.itemList.get(i).getContents());
+			sbResult.append(	JSON_QUOT + "contents" + JSON_QUOT + JSON_COLON).append(JSON_QUOT + this.itemList.get(i).getContents() + JSON_QUOT);
 			sbResult.append(	JSON_COMMA);
-			sbResult.append(	JSON_QUOT + "createDate" + JSON_QUOT + JSON_COLON).append(this.itemList.get(i).getCreateDate());
+			sbResult.append(	JSON_QUOT + "createDate" + JSON_QUOT + JSON_COLON).append(JSON_QUOT + this.itemList.get(i).getCreateDate() + JSON_QUOT);
 			sbResult.append(	JSON_COMMA);
-			sbResult.append(	JSON_QUOT + "author" + JSON_QUOT + JSON_COLON).append(this.itemList.get(i).getAuthor());
+			sbResult.append(	JSON_QUOT + "author" + JSON_QUOT + JSON_COLON).append(JSON_QUOT + this.itemList.get(i).getAuthor() + JSON_QUOT);
 			sbResult.append(	"}");
 			
 			if( i != itemList.size()-1 ){
@@ -47,8 +51,6 @@ public class ResultData {
 		}
 		sbResult.append(		"]");
 		sbResult.append(	"}");
-		sbResult.append(	JSON_COMMA);
-		
 		sbResult.append("}");
 		
 		return sbResult.toString();
@@ -84,14 +86,14 @@ public class ResultData {
 	public void setStartPos(int startPos) {
 		this.startPos = startPos;
 	}
-	public ArrayList<ResultItem> getItemList() {
+	public ArrayList<WNResultItem> getItemList() {
 		return itemList;
 	}
-	public void setItemList(ArrayList<ResultItem> itemList) {
+	public void setItemList(ArrayList<WNResultItem> itemList) {
 		this.itemList = itemList;
 	}
 	public void addItem(String title, String contents, String createDate, String author){
-		ResultItem item = new ResultItem();
+		WNResultItem item = new WNResultItem();
 		item.setTitle(title);
 		item.setContents(contents);
 		item.setCreateDate(createDate);
