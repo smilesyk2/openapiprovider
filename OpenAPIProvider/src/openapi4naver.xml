@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AuthorizationInfo>
+	<Naver>
+		<client_id>d2RLJfrsqJ8AYHUM7Gu3</client_id>
+		<client_secret>OhjQaQVrK9</client_secret>
+	</Naver>
+	<Daum>
+		<client_id>33cd866b687cba813d63620f7ab82e40</client_id><!-- as api key -->
+		<client_secret></client_secret><!-- no value -->
+	</Daum>
+	<Twitter>
+		<client_id>8nYLlGfmPiycSqVhVNOT5mlNA</client_id><!-- as twitter consumer key -->
+		<client_secret>tgbuUCaNieeeYnjrKbzAhPbX0mYw9El9dlv4PoU9oY14xeVDIw</client_secret><!-- as twitter consumer secret -->
+	</Twitter>
+</AuthorizationInfo>
