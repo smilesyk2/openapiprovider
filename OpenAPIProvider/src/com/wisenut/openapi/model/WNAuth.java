@@ -3,6 +3,7 @@ package com.wisenut.openapi.model;
 public class WNAuth {
 	private String client_id;
 	private String client_secret;
+	private String access_token;
 	
 	public String getClient_id() {
 		return client_id;
@@ -15,6 +16,12 @@ public class WNAuth {
 	}
 	public void setClient_secret(String client_secret) {
 		this.client_secret = client_secret;
+	}
+	public String getAccess_token() {
+		return access_token;
+	}
+	public void setAccess_token(String access_token) {
+		this.access_token = access_token;
 	}
 	
 	

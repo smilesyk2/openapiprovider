@@ -43,6 +43,8 @@ public class WNResultData {
 			sbResult.append(	JSON_QUOT + "createDate" + JSON_QUOT + JSON_COLON).append(JSON_QUOT + this.itemList.get(i).getCreateDate() + JSON_QUOT);
 			sbResult.append(	JSON_COMMA);
 			sbResult.append(	JSON_QUOT + "author" + JSON_QUOT + JSON_COLON).append(JSON_QUOT + this.itemList.get(i).getAuthor() + JSON_QUOT);
+			sbResult.append(	JSON_COMMA);
+			sbResult.append(	JSON_QUOT + "link" + JSON_QUOT + JSON_COLON).append(JSON_QUOT + this.itemList.get(i).getLink() + JSON_QUOT);
 			sbResult.append(	"}");
 			
 			if( i != itemList.size()-1 ){
@@ -92,12 +94,13 @@ public class WNResultData {
 	public void setItemList(ArrayList<WNResultItem> itemList) {
 		this.itemList = itemList;
 	}
-	public void addItem(String title, String contents, String createDate, String author){
+	public void addItem(String title, String contents, String createDate, String author, String link){
 		WNResultItem item = new WNResultItem();
 		item.setTitle(title);
 		item.setContents(contents);
 		item.setCreateDate(createDate);
 		item.setAuthor(author);
+		item.setLink(link);
 		
 		itemList.add(item);
 	}

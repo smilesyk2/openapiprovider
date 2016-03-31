@@ -5,6 +5,7 @@ public class WNResultItem {
 	String contents;
 	String createDate;
 	String author;
+	String link;
 	
 	public String getTitle() {
 		return title;
@@ -29,5 +30,11 @@ public class WNResultItem {
 	}
 	public void setAuthor(String author) {
 		this.author = author;
+	}
+	public String getLink() {
+		return link;
+	}
+	public void setLink(String link) {
+		this.link = link;
 	}
 }

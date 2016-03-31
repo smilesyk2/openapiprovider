@@ -15,10 +15,10 @@ public class WNConstants {
 	//public static final int SORT_DSC = 4;
 	
 	public static final String[][] METAINFO_BY_PROVIDER = {
-		{"Naver", "openapi4naver.xml", "sim", "date"},
-		{"Daum", "openapi4daum.xml", "accu", "date"},
+		{"Naver", "openapi.xml", "sim", "date"},
+		{"Daum", "openapi.xml", "accu", "date"},
 		{"Twitter", "twitter4j.properties", "popular", "recent"},
-		{"Facebook", "facebook.properties", "", ""},
-		{"Instagram", "instagram.properties", "", ""},
+		{"Facebook", "facebook4j.properties", "", ""},
+		{"Instagram", "openapi.xml", "", ""},
 	};
 }

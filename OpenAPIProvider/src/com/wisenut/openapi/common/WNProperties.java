@@ -20,6 +20,7 @@ import com.wisenut.openapi.model.WNAuth;
 
 public class WNProperties {
 	private static WNProperties instance = null;
+	private static int provider;
 	private Document doc;
 	private WNAuth auth;
 	
@@ -27,7 +28,7 @@ public class WNProperties {
         this.doc = _doc;
     }
 	
-	public WNProperties(int provider){
+	public WNProperties(){
 	    InputStream in = null;
         try {
             DocumentBuilder db = DocumentBuilderFactory.newInstance().newDocumentBuilder();
@@ -61,15 +62,17 @@ public class WNProperties {
         }
 	}
 	
-	public static synchronized WNProperties getInstance(int provider){
+	public static synchronized WNProperties getInstance(int provider_){
+		provider = provider_;
+		
 	    if( instance == null){
-            instance = new WNProperties(provider);
+            instance = new WNProperties();
         }
         
         return instance;
 	}
 	
-	public synchronized WNAuth getPropValues(int provider) {
+	public synchronized WNAuth getPropValues() {
 		if(auth != null) return auth;
 		
 		XPath xpath = XPathFactory.newInstance().newXPath();
@@ -83,14 +86,13 @@ public class WNProperties {
 			nodeList = (NodeList)xpath.compile(expression).evaluate(doc, XPathConstants.NODESET);
 			
 			for(int idx=0; idx<nodeList.getLength(); idx++){
-				expression = "//*/client_id";
-				String clientId = xpath.compile(expression).evaluate(doc);
-				
-				expression = "//*/client_secret";
-				String clientSecret = xpath.compile(expression).evaluate(doc);
+				String clientId = xpath.compile(expression + "/client_id").evaluate(doc);
+				String clientSecret = xpath.compile(expression + "/client_secret").evaluate(doc);
+				String accessToken = xpath.compile(expression + "/access_token").evaluate(doc);
 				
 				auth.setClient_id(clientId);
 				auth.setClient_secret(clientSecret);
+				auth.setAccess_token(accessToken);
 			}
 			
 			return auth;
@@ -102,8 +104,8 @@ public class WNProperties {
 	}
 	
 	public static void main(String[] args){
-		WNProperties wnprop = WNProperties.getInstance(WNConstants.NAVER_ID);
-		WNAuth auth = wnprop.getPropValues(WNConstants.NAVER_ID);
+		WNProperties wnprop = WNProperties.getInstance(WNConstants.DAUM_ID);
+		WNAuth auth = wnprop.getPropValues();
 		
 		System.out.println(auth.getClient_id());
 		System.out.println(auth.getClient_secret());

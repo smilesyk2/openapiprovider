@@ -12,4 +12,8 @@
 		<client_id>8nYLlGfmPiycSqVhVNOT5mlNA</client_id><!-- as twitter consumer key -->
 		<client_secret>tgbuUCaNieeeYnjrKbzAhPbX0mYw9El9dlv4PoU9oY14xeVDIw</client_secret><!-- as twitter consumer secret -->
 	</Twitter>
+	<Facebook>
+		<client_id>201725240204501</client_id><!-- as twitter consumer key -->
+		<client_secret>ab8038915a6a2095ec9e957ab6c051ec</client_secret><!-- as twitter consumer secret -->
+	</Facebook>
 </AuthorizationInfo>
