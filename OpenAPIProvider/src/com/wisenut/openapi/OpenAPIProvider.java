@@ -7,6 +7,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.xml.crypto.Data;
 import javax.xml.parsers.DocumentBuilder;
@@ -32,13 +33,14 @@ import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 
-import com.wisenut.icf.exception.CrawlingException;
-import com.wisenut.icf.slave.crawler.runner.facebook.FacebookWorker;
 import com.wisenut.openapi.common.WNConstants;
 import com.wisenut.openapi.common.WNProperties;
 import com.wisenut.openapi.model.WNResultData;
 import com.wisenut.openapi.util.StringUtil;
+import com.wisenut.openapi.worker.FacebookWorker;
+import com.wisenut.openapi.worker.TwitterWorker;
 
+import facebook4j.Event;
 import facebook4j.Facebook;
 import facebook4j.FacebookException;
 import facebook4j.FacebookFactory;
@@ -54,36 +56,8 @@ public class OpenAPIProvider {
 		data.setProvider(provider);
 		
 		if(provider.equals("twitter")){
-			Twitter twitter = TwitterFactory.getSingleton();
-		    Query twitterQuery = new Query(query);
-		    twitterQuery.setCount(pageNo);
-
-		    QueryResult result;
-			try {
-				result = twitter.search(twitterQuery);
-				
-				data.setProvider("twitter");
-				data.setTotalCount(result.getCount());
-				data.setCurrentCount(result.getTweets().size());
-				data.setStartPos(startPos);
-				
-				int pos = 0;
-				do{
-					if(pos+1 == startPos ){
-						for (Status status : result.getTweets()) {
-							 data.addItem("NO TITLE",
-									 StringUtil.removeSpecialCharacter(status.getText()),
-									 sdf.format(status.getCreatedAt()),
-									 status.getUser().getScreenName(),
-									 "{LINK}");
-						}
-					}
-					pos++;
-				}while(result.hasNext());
-			} catch (TwitterException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			TwitterWorker tWorker = new TwitterWorker();
+			tWorker.search(query, startPos, pageNo, sort, data);
 		}else if(provider.equals("naver")){
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = null;
@@ -171,54 +145,15 @@ public class OpenAPIProvider {
 				e.printStackTrace();
 			}
 		}else if(provider.equals("facebook")){
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-			DocumentBuilder builder = null;
-			WNProperties wnprop = WNProperties.getInstance(WNConstants.NAVER_ID);
-			String strUrl = "https://graph.facebook.com/search?"
-					+ "q=" + query + "&"
-					+ "type=event&"
-					+ "access_token=CAAC3d9FI3NUBAAQwRJUwKRz778bjkPnVKbz7r7ZBrtwElDNlaLDJN87XbJ7K91GQOwYK4ZATXaZChxKUGVi57gIdBZAAJoZB1T4xuY45LszI5ZCcMV6PThaMqK0vG7IxLCMxatSXGKtXsotpC6qqBwf5zMKRGyfr6PN2B0pOCffNmZAhOPvmOlT";
-			
-			try {
-				//API 요청 및 반환
-				URL url = new URL(strUrl);
-				URLConnection conn = url.openConnection();
-				builder = factory.newDocumentBuilder();
-				
-				System.out.println("### facebook result : " + IOUtils.toString(conn.getInputStream(), "UTF-8"));
-				
-				
-			}catch(Exception e){
-				e.printStackTrace();
-			}
-			/*Facebook facebook = new FacebookFactory().getInstance();
-			try {
-				ResponseList<Post> results = facebook.searchPosts(query);
-				
-				data.setProvider("facebook");
-				data.setTotalCount(results.getCount());
-				for (int i=0; i<results.getCount(); i++){
-					Post thisPost = results.get(i);
-					data.addItem(thisPost.getName(), thisPost.getDescription(), sdf.format(thisPost.getCreatedTime()), thisPost.getId(), thisPost.getLink().toString());
-				}
-			} catch (FacebookException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}*/
-			
+			FacebookWorker fbWorker = new FacebookWorker("group");
+			fbWorker.search(query, data);
 		}
 		return data;
 	}
 	
-	
-	public String getAccessToken(){
-		String result = "";
-		return result;
-	}
-	
 	public static void main(String[] args){
 		OpenAPIProvider provider = new OpenAPIProvider();
-		WNResultData twitterData = provider.getOpenAPIResult("facebook", "%EC%84%A0%EA%B1%B0", 1, 50, WNConstants.METAINFO_BY_PROVIDER[WNConstants.FACEBOOK_ID][WNConstants.SORT_BY_RANK]);
+		WNResultData twitterData = provider.getOpenAPIResult("facebook", "세월호", 1, 50, WNConstants.METAINFO_BY_PROVIDER[WNConstants.FACEBOOK_ID][WNConstants.SORT_BY_RANK]);
 		
 		System.out.println(twitterData.toString());
 	}

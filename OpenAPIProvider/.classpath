@@ -19,7 +19,6 @@
 	<classpathentry kind="lib" path="lib/twitter4j-stream-4.0.4.jar"/>
 	<classpathentry kind="lib" path="lib/json-simple-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/commons-io-2.4.jar"/>
-	<classpathentry kind="lib" path="/icf/bin"/>
-	<classpathentry kind="lib" path="lib/facebook4j-core-2.1.0.jar"/>
+	<classpathentry kind="lib" path="lib/facebook4j-core-2.4.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
