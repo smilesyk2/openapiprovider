@@ -2,7 +2,6 @@ package com.wisenut.openapi.worker;
 
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import twitter4j.Query;
 import twitter4j.QueryResult;
@@ -13,17 +12,6 @@ import twitter4j.TwitterFactory;
 
 import com.wisenut.openapi.model.WNResultData;
 import com.wisenut.openapi.util.StringUtil;
-
-import facebook4j.Event;
-import facebook4j.Facebook;
-import facebook4j.FacebookException;
-import facebook4j.FacebookFactory;
-import facebook4j.Group;
-import facebook4j.Location;
-import facebook4j.Page;
-import facebook4j.Place;
-import facebook4j.ResponseList;
-import facebook4j.User;
 
 public class TwitterWorker {
 	private Twitter twitter;
@@ -36,12 +24,12 @@ public class TwitterWorker {
 	public void search(String query, int startPos, int pageNo, String sort, WNResultData data){
 		try {
 			Query twitterQuery = new Query(query);
-			QueryResult result = twitter.search(twitterQuery);
-			
 			twitterQuery.setCount(pageNo);
 			
+			QueryResult result = twitter.search(twitterQuery);
+			
+			
 			data.setProvider("twitter");
-			data.setTotalCount(result.getCount());
 			data.setCurrentCount(result.getTweets().size());
 			data.setStartPos(startPos);
 			
@@ -51,9 +39,13 @@ public class TwitterWorker {
 					for (Status status : result.getTweets()) {
 						 data.addItem("", StringUtil.removeSpecialCharacter(status.getText()), sdf.format(status.getCreatedAt()), status.getUser().getScreenName(), "");
 					}
+					break;
 				}
 				pos++;
 			}while(result.hasNext());
+			
+			data.setTotalCount(0);
+			
 		} catch (TwitterException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -16,4 +16,8 @@
 		<client_id>201725240204501</client_id><!-- as twitter consumer key -->
 		<client_secret>ab8038915a6a2095ec9e957ab6c051ec</client_secret><!-- as twitter consumer secret -->
 	</Facebook>
+	<Instagram>
+		<client_id>e6e8412a54ee43d0ac60448d71a4cb76</client_id><!-- as twitter consumer key -->
+		<client_secret>fabaa8157af24e1ca0fa36393290a60f</client_secret><!-- as twitter consumer secret -->
+	</Instagram>
 </AuthorizationInfo>
